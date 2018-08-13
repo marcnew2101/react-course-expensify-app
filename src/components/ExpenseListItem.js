@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import moment from 'moment';
+import numeral from 'numeral';
 import { editExpense } from '../actions/expenses.js';
 import { SingleDatePicker } from 'react-dates';
 import { connect } from 'react-redux';
@@ -83,7 +84,12 @@ class ExpenseListItem extends React.Component {
     render() {
         return (
             <div>
-                <li>{this.props.createdAt} - {this.props.description} - {this.props.amount} - {this.props.note}</li>
+                <li>
+                    {numeral(this.props.amount / 100).format('$0,0.00')} - 
+                    {this.props.description} - 
+                    {moment(this.props.createdAt).format('MMMM Do, YYYY')} - 
+                    {this.props.note}
+                </li>
                 <button onClick={this.viewModal}>Edit</button>
                 <Modal
                     isOpen={this.state.openModal} 
