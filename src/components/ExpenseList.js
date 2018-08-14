@@ -4,15 +4,14 @@ import ExpenseListItem from './ExpenseListItem.js';
 import getVisibleExpenses from '../selectors/expenses.js';
 import ExpenseForm from './ExpenseForm.js';
 import { showModal } from '../actions/filters.js';
-import { addExpense } from '../actions/expenses.js';
+import { startAddExpense } from '../actions/expenses.js';
 
 const ExpenseList = (props) => {
 
     return (
         <div>
             <ExpenseForm onSubmit={(expense) => {
-                console.log(expense)
-                props.dispatch(addExpense(expense))
+                props.dispatch(startAddExpense(expense))
             }}/>
             <h1>Expense List</h1>
             <button onClick={() => {
