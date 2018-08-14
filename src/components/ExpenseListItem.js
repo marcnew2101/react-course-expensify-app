@@ -2,10 +2,10 @@ import React from 'react';
 import Modal from 'react-modal';
 import moment from 'moment';
 import numeral from 'numeral';
-import { editExpense } from '../actions/expenses.js';
+import { startEditExpense } from '../actions/expenses.js';
 import { SingleDatePicker } from 'react-dates';
 import { connect } from 'react-redux';
-import { removeExpense } from '../actions/expenses.js';
+import { startRemoveExpense } from '../actions/expenses.js';
 
 class ExpenseListItem extends React.Component {
 
@@ -71,7 +71,7 @@ class ExpenseListItem extends React.Component {
         } else {
             this.setState(() => ({ error: '' }));
             this.closeModal();
-            this.props.dispatch(editExpense(
+            this.props.dispatch(startEditExpense(
                 this.props.id, {
                 description: this.state.description,
                 note: this.state.note,
@@ -128,7 +128,7 @@ class ExpenseListItem extends React.Component {
                         <button>Update</button>
                     </form>
                     <button onClick={() => {
-                        this.props.dispatch(removeExpense({ id: this.props.id }));
+                        this.props.dispatch(startRemoveExpense({ id: this.props.id }));
                         this.closeModal();
                     }}>Delete</button>
                 </Modal>
