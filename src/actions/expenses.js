@@ -64,3 +64,11 @@ export const startSetExpense = () => {
         });
     };
 };
+
+export const startRemoveExpense = ({ id } = {}) => {
+    return (dispatch) => {
+        return database.ref(`expenses/${id}`).remove('value').then(() => {
+            dispatch(removeExpense({ id }));
+        });
+    };
+};
