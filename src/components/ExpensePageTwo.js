@@ -2,7 +2,7 @@ import React from 'react';
 
 const ExpensePageTwo = () => (
   <div>
-    This is Nathan's page
+    This is User 2's page
   </div>
 );
 
