@@ -7,9 +7,9 @@ const Header = ({ startLogout }) => (
   <header>
     <h1>Allowance</h1>
     <ol>
-      <li><NavLink to="/" activeClassName="is-active" exact={true}>Home</NavLink></li>
-      <li><NavLink to="/Nick" activeClassName="is-active">User1</NavLink></li>
-      <li><NavLink to="/Nathan" activeClassName="is-active">User2</NavLink></li>
+      <li><NavLink to="/dashboard" activeClassName="is-active">Home</NavLink></li>
+      <li><NavLink to="/User1" activeClassName="is-active">User1</NavLink></li>
+      <li><NavLink to="/User2" activeClassName="is-active">User2</NavLink></li>
       <button onClick={startLogout}>Logout</button>
     </ol>
   </header>

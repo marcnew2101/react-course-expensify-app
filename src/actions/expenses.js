@@ -1,4 +1,3 @@
-import uuid from 'uuid';
 import database from '../firebase/firebase.js';
 
 export const addExpense = (expense) => {
@@ -9,7 +8,8 @@ export const addExpense = (expense) => {
 }
 
 export const startAddExpense = (expenseData = {}) => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
         const {
             description = '', 
             note = '', 
@@ -19,7 +19,7 @@ export const startAddExpense = (expenseData = {}) => {
 
         const expense = { description, note, amount, createdAt };
 
-        database.ref('expenses').push(expense).then((ref) => {
+        database.ref(`users/${uid}/expenses`).push(expense).then((ref) => {
             dispatch(addExpense({
                 id: ref.key,
                 ...expense
@@ -51,8 +51,9 @@ export const setExpense = (expenses) => {
 };
 
 export const startSetExpense = () => {
-    return (dispatch) => {
-        return database.ref('expenses').once('value').then((snapshot) => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}/expenses`).once('value').then((snapshot) => {
             const expenses = [];
             snapshot.forEach((childSnapshot) => {
                 expenses.push({
@@ -66,16 +67,18 @@ export const startSetExpense = () => {
 };
 
 export const startRemoveExpense = ({ id } = {}) => {
-    return (dispatch) => {
-        return database.ref(`expenses/${id}`).remove().then(() => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}expenses/${id}`).remove().then(() => {
             dispatch(removeExpense({ id }));
         });
     };
 };
 
 export const startEditExpense = (id, updates) => {
-    return (dispatch) => {
-        return database.ref(`expenses/${id}`).update(updates).then(() => {
+    return (dispatch, getState) => {
+        const uid = getState().auth.uid;
+        return database.ref(`users/${uid}expenses/${id}`).update(updates).then(() => {
             dispatch(editExpense(id, updates));
         });
     };
