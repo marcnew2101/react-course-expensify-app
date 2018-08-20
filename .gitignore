@@ -1,3 +1,4 @@
 node_modules/
 src/components/AllowanceList.js
 src/components/ExpenseEdit.js
+src/firebase/firebase.js
