@@ -1,7 +1,6 @@
-# Git Commands
+# Dev Server  
+yarn run dev-server  
 
-git init - Create a new repo
-git status - View the changes to project
-git add - Add files to staging area
-git commit - Creates a new commit with files from staging area
-git log - View commits
+# Prod Server  
+yarn run build:prod  
+node server/server.js  
