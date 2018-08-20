@@ -1,20 +1,26 @@
 import React from 'react';
 import moment from 'moment';
 import Modal from 'react-modal';
-import { connect } from 'react-redux';
 import { SingleDatePicker } from 'react-dates';
-import { hideModal } from '../actions/filters.js';
 import 'react-dates/lib/css/_datepicker.css';
 
-class ExpenseForm extends React.Component {
-  state = {
-    description: '',
-    note: '',
-    amount: '',
-    createdAt: moment(),
-    calendarFocused: false,
-    error: ''
-  };
+export default class ExpenseForm extends React.Component {
+  constructor(props) {
+    super(props)
+    setTimeout(() => {
+      console.log(this.props.expense)
+    }, 1000);
+
+    this.state = {
+      openModal: true,
+      description: this.props.expense ? this.props.expense.description : '',
+      note: this.props.expense ? this.props.expense.note : '',
+      amount: this.props.expense ? (this.props.expense.amount / 100).toString() : '',
+      createdAt: this.props.expense ? moment(props.expense.createdAt) : moment(),
+      calendarFocused: false,
+      error: ''
+    };
+  }
 
   onDescriptionChange = (e) => {
     const description = e.target.value;
@@ -44,26 +50,6 @@ class ExpenseForm extends React.Component {
     this.setState(() => ({ calendarFocused: focused }));
   };
 
-  handleCloseModal = () => {
-    this.props.dispatch(hideModal());
-  };
-
-  viewModal = () => {
-    this.setState(() => {
-        return {
-            openModal: true
-        }
-    })
-  }
-
-  closeModal = () => {
-      this.setState(() => {
-          return {
-              openModal: undefined
-          }
-      })
-  }
-
   onSubmit = (e) => {
     e.preventDefault();
 
@@ -71,24 +57,23 @@ class ExpenseForm extends React.Component {
       this.setState(() => ({ error: 'Please provide description and amount.' }));
     } else {
       this.setState(() => ({ error: '' }));
-      this.props.dispatch(hideModal());
       this.props.onSubmit({
         description: this.state.description,
-        amount: parseFloat(this.state.amount, 10) * 100,
+        amount: parseFloat(this.state.amount, 10) * (100 * -1),
         createdAt: this.state.createdAt.valueOf(),
         note: this.state.note
-      });
+      })
+      this.props.closeExpenseForm();
     }
   };
 
   render() {
     return (
         <Modal 
-            isOpen={this.props.filters.modal} 
+            isOpen={this.props.isModalOpen} 
             contentLabel="Add Expense" 
-            onRequestClose={this.handleCloseModal}
+            onRequestClose={this.props.closeExpenseForm}
             ariaHideApp={false}>
-
             {this.state.error && <p>{this.state.error}</p>}
 
             <form onSubmit={this.onSubmit}>
@@ -96,13 +81,17 @@ class ExpenseForm extends React.Component {
                 type="text"
                 placeholder="Description"
                 autoFocus
-                value={this.state.description}
+                value={setTimeout(() => {
+                  return this.state.description
+                }, 1000)}
                 onChange={this.onDescriptionChange}
             />
             <input
                 type="text"
                 placeholder="Amount"
-                value={this.state.amount}
+                value={setTimeout(() => {
+                  return this.state.amount
+                }, 1000)}
                 onChange={this.onAmountChange}
             />
             <SingleDatePicker
@@ -114,7 +103,7 @@ class ExpenseForm extends React.Component {
                 isOutsideRange={() => false}
             />
             <textarea
-                placeholder="Add a note for your expense (optional)"
+                placeholder="Add a note (optional)"
                 value={this.state.note}
                 onChange={this.onNoteChange}
             >
@@ -125,14 +114,3 @@ class ExpenseForm extends React.Component {
     )
   }
 }
-
-const mapStateToProps = (state) => {
-    return {
-        expenses: state.expenses,
-        filters: state.filters
-    }
-}
-
-const ConnectedExpenseForm = connect(mapStateToProps)(ExpenseForm);
-
-export default ConnectedExpenseForm;

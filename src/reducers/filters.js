@@ -34,16 +34,6 @@ const filtersReducer = (state = filtersReducerDefaultState, action) => {
             ...state,
             endDate: action.endDate
         }
-    } else if (action.type === "SHOW_MODAL") {
-        return {
-            ...state,
-            modal: action.modal
-        }
-    } else if (action.type === "HIDE_MODAL") {
-        return {
-            ...state,
-            modal: action.modal
-        }
     } else {
         return state;
     }

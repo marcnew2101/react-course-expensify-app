@@ -32,17 +32,3 @@ export const setEndDate = (endDate = undefined) => {
           endDate: endDate
       }
 }
-
-export const showModal = (modal = true) => {
-    return {
-        type: 'SHOW_MODAL',
-        modal: modal
-    }
-}
-
-export const hideModal = (modal = undefined) => {
-    return {
-        type: 'HIDE_MODAL',
-        modal: modal
-    }
-}
