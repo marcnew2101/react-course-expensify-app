@@ -4,19 +4,17 @@ import Modal from 'react-modal';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 
-export default class ExpenseForm extends React.Component {
+export default class ExpenseEdit extends React.Component {
+
   constructor(props) {
     super(props)
-    setTimeout(() => {
-      console.log(this.props.expense)
-    }, 1000);
 
     this.state = {
       openModal: true,
-      description: this.props.expense ? this.props.expense.description : '',
-      note: this.props.expense ? this.props.expense.note : '',
-      amount: this.props.expense ? (this.props.expense.amount / 100).toString() : '',
-      createdAt: this.props.expense ? moment(props.expense.createdAt) : moment(),
+      description: this.props.expense,
+      note: this.props.expense.note,
+      amount: (this.props.expense.amount / 100).toString(),
+      createdAt: moment(props.expense.createdAt),
       calendarFocused: false,
       error: ''
     };
@@ -81,17 +79,13 @@ export default class ExpenseForm extends React.Component {
                 type="text"
                 placeholder="Description"
                 autoFocus
-                value={setTimeout(() => {
-                  return this.state.description
-                }, 1000)}
+                value={this.state.description}
                 onChange={this.onDescriptionChange}
             />
             <input
                 type="text"
                 placeholder="Amount"
-                value={setTimeout(() => {
-                  return this.state.amount
-                }, 1000)}
+                value={this.state.amount}
                 onChange={this.onAmountChange}
             />
             <SingleDatePicker

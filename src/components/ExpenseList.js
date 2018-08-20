@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ExpenseListItem from './ExpenseListItem.js';
 import getVisibleExpenses from '../selectors/expenses.js';
-import ExpenseForm from './ExpenseForm.js';
+import ExpenseAdd from './ExpenseAdd.js';
 import AllowanceForm from './AllowanceForm.js';
 import { startAddExpense } from '../actions/expenses.js';
 
@@ -50,7 +50,7 @@ class ExpenseList extends React.Component {
             <div>
                 <h1>Expense List</h1>
                 <button onClick={this.viewExpenseForm}>Add Expense</button>
-                {this.state.expenseComponent ? <ExpenseForm 
+                {this.state.expenseComponent ? <ExpenseAdd 
                     closeExpenseForm={this.closeExpenseForm}
                     isModalOpen={this.state.expenseComponent}
                     onSubmit={(expense) => {

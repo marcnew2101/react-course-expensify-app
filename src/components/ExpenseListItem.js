@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import numeral from 'numeral';
-import ExpenseForm from './ExpenseForm.js';
+import ExpenseEdit from './ExpenseEdit.js';
 import { connect } from 'react-redux';
 import { startRemoveExpense } from '../actions/expenses.js';
 import { startEditExpense } from '../actions/expenses.js';
@@ -28,7 +28,7 @@ export class ExpenseListItem extends React.Component {
 
                 <button onClick={this.props.viewExpenseForm}>Edit</button>
 
-                {this.props.isModalOpen ? <ExpenseForm 
+                {this.props.isModalOpen ? <ExpenseEdit 
                     expense={this.props.expense}
                     onSubmit={this.onSubmit}/> : null}
 
