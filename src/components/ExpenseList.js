@@ -48,16 +48,17 @@ class ExpenseList extends React.Component {
     render() {
         return (
             <div>
-                <h2>Expense List</h2>
-                <button 
+                <button className="button"
                     onClick={this.viewAddExpenseForm}>Add Expense</button>
+                <span>  </span>
                 <ExpenseAdd 
                     closeAddExpenseForm={this.closeAddExpenseForm}
                     isAddOpen={this.state.expenseAdd}
                     onSubmit={(expense) => {
                         this.props.dispatch(startAddExpense(expense))
                     }}/>
-                <button 
+                <span>  </span>
+                <button className="button"
                     onClick={this.viewAllowanceForm}>Add Allowance</button>
                 <AllowanceForm 
                     closeAllowanceForm={this.closeAllowanceForm}

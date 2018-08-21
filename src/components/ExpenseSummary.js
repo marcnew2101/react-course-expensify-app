@@ -4,8 +4,12 @@ import numeral from 'numeral';
 import { connect } from 'react-redux';
 
 const ExpenseTotal = (props) => (
-    <div>
-        <h3>Balance: {numeral(props.expenses / 100).format('$0,0.00')}</h3>
+    <div className="page-header">
+        <div className="content-container">
+            <h3 className="page-header__title">Balance:  
+                <span><span>  </span>{numeral(props.expenses / 100).format('$0,0.00')}</span>
+            </h3>
+        </div>
     </div>
 )
 
