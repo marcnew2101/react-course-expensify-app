@@ -7,7 +7,6 @@ import 'react-dates/lib/css/_datepicker.css';
 export default class ExpenseAdd extends React.Component {
 
     state = {
-      openModal: true,
       description: '',
       note: '',
       amount: '',
@@ -57,30 +56,30 @@ export default class ExpenseAdd extends React.Component {
         createdAt: this.state.createdAt.valueOf(),
         note: this.state.note
       })
-      this.props.closeExpenseForm();
+      this.props.closeAddExpenseForm();
     }
   };
 
   render() {
     return (
         <Modal 
-            isOpen={this.props.isModalOpen} 
+            isOpen={this.props.isAddOpen} 
             contentLabel="Add Expense" 
-            onRequestClose={this.props.closeExpenseForm}
+            onRequestClose={this.props.closeAddExpenseForm}
             ariaHideApp={false}>
             {this.state.error && <p>{this.state.error}</p>}
 
             <form onSubmit={this.onSubmit}>
             <input
                 type="text"
-                placeholder="Description"
+                placeholder="Desc"
                 autoFocus
                 value={this.state.description}
                 onChange={this.onDescriptionChange}
             />
             <input
                 type="text"
-                placeholder="Amount"
+                placeholder="Amt"
                 value={this.state.amount}
                 onChange={this.onAmountChange}
             />
@@ -93,7 +92,7 @@ export default class ExpenseAdd extends React.Component {
                 isOutsideRange={() => false}
             />
             <textarea
-                placeholder="Add a note (optional)"
+                placeholder="Add note (optional)"
                 value={this.state.note}
                 onChange={this.onNoteChange}
             >

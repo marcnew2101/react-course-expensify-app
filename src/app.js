@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import AppRouter, { history } from './routers/AppRouter.js';
 import configureStore from './store/configureStore.js';
+import getVisibleExpenses from './selectors/expenses';
 import { startSetExpense } from './actions/expenses.js';
 import { login, logout } from './actions/auth.js';
 import 'normalize.css/normalize.css';

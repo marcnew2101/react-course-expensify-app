@@ -3,12 +3,10 @@ import moment from 'moment';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { SingleDatePicker } from 'react-dates';
-import { startAddExpense } from '../actions/expenses.js';
 import 'react-dates/lib/css/_datepicker.css';
 
 class AllowanceForm extends React.Component {
   state = {
-    openModal: true,
     description: 'Allowance',
     note: '',
     amount: '',
@@ -35,22 +33,6 @@ class AllowanceForm extends React.Component {
     this.setState(() => ({ calendarFocused: focused }));
   };
 
-  viewModal = () => {
-    this.setState(() => {
-        return {
-            openModal: true
-        }
-    })
-  }
-
-  closeModal = () => {
-      this.setState(() => {
-          return {
-              openModal: undefined
-          }
-      })
-  }
-
   onSubmit = (e) => {
     e.preventDefault();
 
@@ -71,7 +53,7 @@ class AllowanceForm extends React.Component {
   render() {
     return (
         <Modal 
-            isOpen={this.props.isModalOpen} 
+            isOpen={this.props.isAllowanceOpen} 
             contentLabel="Add Allowance" 
             onRequestClose={this.props.closeAllowanceForm}
             ariaHideApp={false}>

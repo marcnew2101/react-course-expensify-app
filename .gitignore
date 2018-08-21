@@ -1,3 +1,4 @@
 node_modules/
 src/components/AllowanceList.js
 src/firebase/firebase.js
+src/playground

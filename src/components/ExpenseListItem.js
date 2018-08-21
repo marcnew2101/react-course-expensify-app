@@ -7,6 +7,10 @@ import { startRemoveExpense } from '../actions/expenses.js';
 import { startEditExpense } from '../actions/expenses.js';
 
 export class ExpenseListItem extends React.Component {
+
+    state = {
+        expenseEdit: undefined
+    }
     
     onSubmit = (expense) => {
         this.props.startEditExpense(this.props.id, expense)
@@ -15,6 +19,22 @@ export class ExpenseListItem extends React.Component {
     onRemove = () => {
         this.props.startRemoveExpense({ id: this.props.id })
     }
+
+    viewEditExpenseForm = () => {
+        this.setState(() => {
+            return {
+                expenseEdit: true
+            }
+        })
+      }
+
+      closeEditExpenseForm = () => {
+        this.setState(() => {
+            return {
+                expenseEdit: undefined
+            }
+        })
+      }
     
     render() {
         return (
@@ -26,11 +46,14 @@ export class ExpenseListItem extends React.Component {
                     {this.props.note}
                 </li>
 
-                <button onClick={this.props.viewExpenseForm}>Edit</button>
+                <button onClick={this.viewEditExpenseForm}>Edit</button>
 
-                {this.props.isModalOpen ? <ExpenseEdit 
+                <ExpenseEdit 
+                    isEditOpen={this.state.expenseEdit}
+                    viewEditExpenseForm={this.viewEditExpenseForm}
+                    closeEditExpenseForm={this.closeEditExpenseForm}
                     expense={this.props.expense}
-                    onSubmit={this.onSubmit}/> : null}
+                    onSubmit={this.onSubmit}/>
 
                 <button onClick={this.onRemove}>Delete</button>
             </div>

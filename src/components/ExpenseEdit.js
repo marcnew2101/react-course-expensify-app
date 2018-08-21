@@ -10,13 +10,12 @@ export default class ExpenseEdit extends React.Component {
     super(props)
 
     this.state = {
-      openModal: true,
-      description: this.props.expense,
-      note: this.props.expense.note,
-      amount: (this.props.expense.amount / 100).toString(),
-      createdAt: moment(props.expense.createdAt),
-      calendarFocused: false,
-      error: ''
+        description: this.props.expense.description,
+        note: this.props.expense.note,
+        amount: ((this.props.expense.amount / 100) * -1).toString(),
+        createdAt: moment(props.expense.createdAt),
+        calendarFocused: false,
+        error: ''
     };
   }
 
@@ -61,16 +60,16 @@ export default class ExpenseEdit extends React.Component {
         createdAt: this.state.createdAt.valueOf(),
         note: this.state.note
       })
-      this.props.closeExpenseForm();
+      this.props.closeEditExpenseForm();
     }
   };
 
   render() {
     return (
         <Modal 
-            isOpen={this.props.isModalOpen} 
+            isOpen={this.props.isEditOpen} 
             contentLabel="Add Expense" 
-            onRequestClose={this.props.closeExpenseForm}
+            onRequestClose={this.props.closeEditExpenseForm}
             ariaHideApp={false}>
             {this.state.error && <p>{this.state.error}</p>}
 

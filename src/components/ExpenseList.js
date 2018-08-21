@@ -9,22 +9,22 @@ import { startAddExpense } from '../actions/expenses.js';
 class ExpenseList extends React.Component {
 
     state = {
-        expenseComponent: undefined,
-        allowanceComponent: undefined
+        expenseAdd: undefined,
+        allowanceAdd: undefined
     }
     
-    viewExpenseForm = () => {
+    viewAddExpenseForm = () => {
         this.setState(() => {
             return {
-                expenseComponent: true
+                expenseAdd: true
             }
         })
       }
 
-      closeExpenseForm = () => {
+      closeAddExpenseForm = () => {
         this.setState(() => {
             return {
-                expenseComponent: undefined
+                expenseAdd: undefined
             }
         })
       }
@@ -32,7 +32,7 @@ class ExpenseList extends React.Component {
       viewAllowanceForm = () => {
           this.setState(() => {
               return {
-                allowanceComponent: true
+                allowanceAdd: true
               }
           })
       }
@@ -40,7 +40,7 @@ class ExpenseList extends React.Component {
       closeAllowanceForm = () => {
         this.setState(() => {
             return {
-                allowanceComponent: undefined
+                allowanceAdd: undefined
             }
         })
       }
@@ -48,25 +48,26 @@ class ExpenseList extends React.Component {
     render() {
         return (
             <div>
-                <h1>Expense List</h1>
-                <button onClick={this.viewExpenseForm}>Add Expense</button>
-                {this.state.expenseComponent ? <ExpenseAdd 
-                    closeExpenseForm={this.closeExpenseForm}
-                    isModalOpen={this.state.expenseComponent}
+                <h2>Expense List</h2>
+                <button 
+                    onClick={this.viewAddExpenseForm}>Add Expense</button>
+                <ExpenseAdd 
+                    closeAddExpenseForm={this.closeAddExpenseForm}
+                    isAddOpen={this.state.expenseAdd}
                     onSubmit={(expense) => {
                         this.props.dispatch(startAddExpense(expense))
-                    }}/> : null}
-                <button onClick={this.viewAllowanceForm}>Add Allowance</button>
-                {this.state.allowanceComponent ? <AllowanceForm 
+                    }}/>
+                <button 
+                    onClick={this.viewAllowanceForm}>Add Allowance</button>
+                <AllowanceForm 
                     closeAllowanceForm={this.closeAllowanceForm}
-                    isModalOpen={this.state.allowanceComponent}
+                    isAllowanceOpen={this.state.allowanceAdd}
                     onSubmit={(expense) => {
-                    this.props.dispatch(startAddExpense(expense))
-                }}/> : null}
+                        this.props.dispatch(startAddExpense(expense))
+                        console.log(expense)
+                }}/>
                 <ol>{this.props.expenses.map((expense) => 
                     <ExpenseListItem 
-                        isModalOpen={this.state.expenseComponent} 
-                        viewExpenseForm={this.viewExpenseForm}
                         key={expense.id}{...expense}/>)}
                 </ol>
             </div>
