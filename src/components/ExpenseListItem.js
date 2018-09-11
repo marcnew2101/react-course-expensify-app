@@ -26,7 +26,7 @@ export class ExpenseListItem extends React.Component {
                 expenseEdit: true
             }
         })
-      }
+    }
 
       closeEditExpenseForm = () => {
         this.setState(() => {
@@ -34,28 +34,31 @@ export class ExpenseListItem extends React.Component {
                 expenseEdit: undefined
             }
         })
-      }
+    }
     
     render() {
         return (
             <div>
-                <li>
-                    {numeral(this.props.amount / 100).format('$0,0.00')} - 
-                    {this.props.description} - 
-                    {moment(this.props.createdAt).format('MMMM Do, YYYY')} - 
-                    {this.props.note}
-                </li>
-
-                <button onClick={this.viewEditExpenseForm}>Edit</button>
-
-                <ExpenseEdit 
-                    isEditOpen={this.state.expenseEdit}
-                    viewEditExpenseForm={this.viewEditExpenseForm}
-                    closeEditExpenseForm={this.closeEditExpenseForm}
-                    expense={this.props.expense}
-                    onSubmit={this.onSubmit}/>
-
-                <button onClick={this.onRemove}>Delete</button>
+                <div className="list-item">
+                    <div>
+                        <h3 className="list-item__title">{this.props.description}</h3>
+                        <span className="list-item__sub-title">{moment(this.props.createdAt).format('MMMM Do, YYYY')}</span>
+                        <div>
+                            <button className="button" onClick={this.viewEditExpenseForm}>Edit</button>
+                        </div>
+                    </div>
+                    <p>{this.props.note}</p>
+                    <h3 className="list-item__data">{numeral(this.props.amount / 100).format('$0,0.00')}</h3>
+                </div>
+                <div className="content-container">
+                    <ExpenseEdit 
+                        isEditOpen={this.state.expenseEdit}
+                        viewEditExpenseForm={this.viewEditExpenseForm}
+                        closeEditExpenseForm={this.closeEditExpenseForm}
+                        expense={this.props.expense}
+                        onSubmit={this.onSubmit}
+                        onRemove={this.onRemove}/>
+                </div>
             </div>
         );
     }
@@ -63,7 +66,7 @@ export class ExpenseListItem extends React.Component {
 
 const mapStateToProps = (state, props) => ({
     expense: state.expenses.find((expense) => expense.id === props.id)
-  });
+});
 
 const mapDispatchToProps = (dispatch) => ({
     startEditExpense: (id, expense) => dispatch(startEditExpense(id, expense)),

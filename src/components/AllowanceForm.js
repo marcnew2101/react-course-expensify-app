@@ -58,26 +58,26 @@ class AllowanceForm extends React.Component {
             onRequestClose={this.props.closeAllowanceForm}
             ariaHideApp={false}>
 
-            {this.state.error && <p>{this.state.error}</p>}
-
-            <form onSubmit={this.onSubmit}>
-
-            <input
-                type="text"
-                placeholder="Amount"
-                value={this.state.amount}
-                onChange={this.onAmountChange}
-            />
-
-            <SingleDatePicker
-                date={this.state.createdAt}
-                onDateChange={this.onDateChange}
-                focused={this.state.calendarFocused}
-                onFocusChange={this.onFocusChange}
-                numberOfMonths={1}
-                isOutsideRange={() => false}
-            />
-            <button>Submit</button>
+            <form className="form" onSubmit={this.onSubmit}>
+              {this.state.error && <p className="form__error">{this.state.error}</p>}
+              <input
+                  type="text"
+                  className="text-input"
+                  placeholder="Amount"
+                  value={this.state.amount}
+                  onChange={this.onAmountChange}
+              />
+              <SingleDatePicker
+                  date={this.state.createdAt}
+                  onDateChange={this.onDateChange}
+                  focused={this.state.calendarFocused}
+                  onFocusChange={this.onFocusChange}
+                  numberOfMonths={1}
+                  isOutsideRange={() => false}
+              />
+              <div>
+                <button className="button">Submit</button>
+              </div>
             </form>
         </Modal>
     )

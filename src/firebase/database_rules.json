@@ -1,35 +1,51 @@
 {
-    "rules": {
-      ".read": false,
-      ".write": false,
-      "users": {
-        "$user_id": {
-          ".read": "$user_id === auth.uid",
-          ".write": "$user_id === auth.uid",
-          "expenses": {
-            "$expense_id": {
-                  ".validate": "newData.hasChildren(['description', 'note', 'createdAt', 'amount'])",
-               "description": {
-                 ".validate": "newData.isString() && newData.val().length > 0"
-               },
-               "note": {
-                 ".validate": "newData.isString()"
-               },
-                  "createdAt": {
-                 ".validate": "newData.isNumber()"
-               },
-               "amount": {
-                 ".validate": "newData.isNumber()"
-               },
-               "$other": {
-                   ".validate": false
-               }
-            }
-          },
-          "$other": {
-            ".validate": false
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "users": {
+      ".read": "root.child('users').child(auth.uid).child('role').child('admin').val() == true",
+    	".write": "root.child('users').child(auth.uid).child('role').child('admin').val() == true",
+      "$user_id": {
+        ".read": "$user_id === auth.uid",
+        ".write": "root.child('users').child(auth.uid).child('role').child('mod').val() == true",
+        "role" : {
+					"admin": {
+						".validate": "newData.isBoolean()"
+					},
+          "mod": {
+						".validate": "newData.isBoolean()"
+					}
+        },
+        "user": {
+          ".validate": "newData.isString()"
+        },
+        "expenses": {
+          "$expense_id": {
+           	 ".validate": "newData.hasChildren(['description', 'note', 'createdAt', 'amount'])",
+             "description": {
+               ".validate": "newData.isString() && newData.val().length > 0"
+             },
+             "note": {
+               ".validate": "newData.isString()"
+             },
+           	 "createdAt": {
+               ".validate": "newData.isNumber()"
+             },
+             "amount": {
+               ".validate": "newData.isNumber()"
+             },
+             "$other": {
+             	".validate": false
+             }
           }
+        },
+        "$other": {
+          ".validate": false
         }
+      },
+      "selectedUser": {
+        ".validate": "newData.exists()"
       }
     }
   }
+}

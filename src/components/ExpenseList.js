@@ -4,6 +4,7 @@ import ExpenseListItem from './ExpenseListItem.js';
 import getVisibleExpenses from '../selectors/expenses.js';
 import ExpenseAdd from './ExpenseAdd.js';
 import AllowanceForm from './AllowanceForm.js';
+import ExpenseListFilters from './ExpenseListFilters.js';
 import { startAddExpense } from '../actions/expenses.js';
 
 class ExpenseList extends React.Component {
@@ -47,30 +48,53 @@ class ExpenseList extends React.Component {
     
     render() {
         return (
-            <div>
-                <button className="button"
+            <div className="content-container">
+                {this.props.admin ? (
+                    <button className="button"
                     onClick={this.viewAddExpenseForm}>Add Expense</button>
+                ) : (null)}
                 <span>  </span>
-                <ExpenseAdd 
-                    closeAddExpenseForm={this.closeAddExpenseForm}
-                    isAddOpen={this.state.expenseAdd}
-                    onSubmit={(expense) => {
-                        this.props.dispatch(startAddExpense(expense))
-                    }}/>
-                <span>  </span>
-                <button className="button"
+                {this.props.admin ? (
+                    <button className="button"
                     onClick={this.viewAllowanceForm}>Add Allowance</button>
-                <AllowanceForm 
-                    closeAllowanceForm={this.closeAllowanceForm}
-                    isAllowanceOpen={this.state.allowanceAdd}
-                    onSubmit={(expense) => {
-                        this.props.dispatch(startAddExpense(expense))
-                        console.log(expense)
-                }}/>
-                <ol>{this.props.expenses.map((expense) => 
-                    <ExpenseListItem 
-                        key={expense.id}{...expense}/>)}
-                </ol>
+                ) : (null)}
+                {this.props.admin ? (
+                    <div>
+                        <ExpenseAdd 
+                            closeAddExpenseForm={this.closeAddExpenseForm}
+                            isAddOpen={this.state.expenseAdd}
+                            onSubmit={(expense) => {
+                            this.props.dispatch(startAddExpense(expense))
+                        }}/>
+                    </div>
+                ) : (null)}
+                {this.props.admin ? (
+                    <div>
+                        <AllowanceForm 
+                            closeAllowanceForm={this.closeAllowanceForm}
+                            isAllowanceOpen={this.state.allowanceAdd}
+                            onSubmit={(expense) => {
+                            this.props.dispatch(startAddExpense(expense))
+                        }}/>
+                    </div>
+                ) : (null)}
+                <ExpenseListFilters />
+                <div className="list-header">
+                    <div className="show-for-mobile">Expenses</div>
+                    <div className="show-for-desktop">Expense</div>
+                    <div className="show-for-desktop">Amount</div>
+                </div>
+                <div className="list-body">
+                    {this.props.expenses.length === 0 ? (
+                        <div className="list-item--message">
+                            <span>No Expenses</span>
+                        </div>
+                    ) : (
+                        this.props.expenses.map((expense) => 
+                        <ExpenseListItem 
+                            key={expense.id}{...expense}/>)
+                    )}
+                </div>
             </div>
         )
     }
@@ -79,7 +103,8 @@ class ExpenseList extends React.Component {
 const mapStateToProps = (state) => {
     return {
         expenses: getVisibleExpenses(state.expenses, state.filters),
-        filters: state.filters
+        admin: state.admin,
+        auth: state.auth
     }
 }
 

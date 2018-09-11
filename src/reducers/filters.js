@@ -4,8 +4,7 @@ const filtersReducerDefaultState = {
     text: '',
     sortBy: 'date',
     startDate: moment().startOf('month'),
-    endDate: moment().endOf('month'),
-    modal: undefined
+    endDate: moment().endOf('month')
 };
 
 const filtersReducer = (state = filtersReducerDefaultState, action) => {

@@ -1,20 +1,42 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { startLogout } from '../actions/auth.js';
 import { connect } from 'react-redux';
 
-const Header = ({ startLogout }) => (
-  <header className="header">
-    <div className="content-container">
-      <div className="header__content">
-        <h1 className="header__title">Allowance App</h1>
-        <button className="button button--link" onClick={startLogout}>Logout</button>
-      </div>
-    </div>
-  </header>
-);
+class Header extends React.Component {
 
-const mapDispatchToProps = (dispatch, state) => ({
-  startLogout: () => dispatch(startLogout())
-});
+  state = {
+    redirect: false
+  }
 
-export default connect(undefined, mapDispatchToProps)(Header);
+  handleOnClick = () => {
+    this.setState({redirect: true});
+  }
+
+  render() {
+    return (
+      <header className="header">
+        <div className="content-container">
+          <div className="header__content">
+            <h1 className="header__title">Allowance App</h1>
+            <button className="button button--link" onClick={() => {
+              this.props.dispatch(startLogout())
+            }}>Logout</button>
+            {this.props.admin ? (
+              <button className="button button--link" onClick={this.handleOnClick}>Admin</button>
+            ) : (null)}
+            {this.state.redirect ? <Redirect to='/admin'/> : null}
+          </div>
+        </div>
+      </header>
+    )
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+      admin: state.admin
+  }
+}
+
+export default connect(mapStateToProps)(Header);

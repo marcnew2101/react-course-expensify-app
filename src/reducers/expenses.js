@@ -22,7 +22,7 @@ const expensesReducer = (state = expensesReducerDefaultState, action) => {
         })
     } else if (action.type === 'SET_EXPENSE') {
         return action.expenses
-
+        
     } else {
         return state;
     }
